@@ -17,18 +17,18 @@ export default function AddBookForm() {
   // firstName and lastName will have correct type
 
   return (
-    <div className="m-auto w-[600px]">
+    <div className="mx-auto w-[600px] ">
       <form onSubmit={onSubmit}>
         <label className="block">Book Title</label>
         <input
-          className="border rounded focus:outline-none py-2 w-[300px]"
+          className="border rounded focus:outline-none py-2 w-full"
           placeholder="Book Title"
           {...register("bookTitle")}
         />
 
         <label className="block">Book Title</label>
         <input
-          className="border rounded focus:outline-none py-2 w-[300px]"
+          className="border rounded focus:outline-none py-2 w-full"
           placeholder="Book Title"
           {...register("bookTitle")}
         />
