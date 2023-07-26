@@ -1,6 +1,10 @@
 
 import { useForm } from "react-hook-form";
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useLoginMutation } from "../redux/features/user/userApi";
+import { setUser } from "../redux/features/user/userSlice";
+import { useDispatch } from 'react-redux';
+import { useAppDispatch } from "../redux/hooks";
 
 type FormData = {
   email: string;
@@ -8,13 +12,25 @@ type FormData = {
 };
 
 const Login = () => {
+    const dispatch = useAppDispatch()
+
+    const [login, {isError, isLoading, isSuccess, data}] = useLoginMutation();
+
+    useEffect(()=> {
+        console.log(data)
+        if(isSuccess && data){
+            dispatch(setUser(data.data));
+        }
+    }, [data, isSuccess])
     
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    // formState: { errors },
   } = useForm<FormData>();
-  const onSubmit = handleSubmit((data) => console.log(data));
+  const onSubmit = handleSubmit((data) => {
+    login(data)
+  });
 
   return (
     <div className="mx-auto w-[600px] ">

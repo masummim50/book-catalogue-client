@@ -11,7 +11,7 @@ const userApi = api.injectEndpoints({
         }),
         signup: builder.mutation({
             query: (signupData)=> ({
-                url: "/auth/login",
+                url: "/auth/signup",
                 method: 'POST',
                 body: signupData
             })
@@ -19,5 +19,4 @@ const userApi = api.injectEndpoints({
     })
 })
 
-export default userApi.reducer;
 export const {useLoginMutation, useSignupMutation} = userApi;

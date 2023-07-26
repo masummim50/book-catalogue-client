@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import React, {useEffect} from 'react';
 import "./elipsis.css"
 import { useGetBooksQuery } from '../redux/features/book/bookApi';
