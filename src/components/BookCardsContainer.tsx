@@ -1,5 +1,6 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import "./elipsis.css"
+import { useGetBooksQuery } from '../redux/features/book/bookApi';
 const books = [
     {
       title: "To Kill a Mockingbird",
@@ -123,7 +124,17 @@ const books = [
     },
   ];
 
+
+
 const BookCardsContainer = () => {
+
+  const {isLoading, isError, data, isSuccess} = useGetBooksQuery(undefined);
+
+  useEffect(()=> {
+    console.log("useeffect running")
+    console.log(data)
+  },[data])
+
     return (
         <div className='max-w-[1100px] m-auto mt-6'>
             <h2 className='text-[25px] font-bold mb-5'>Recently Added Books</h2>

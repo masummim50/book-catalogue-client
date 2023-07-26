@@ -11,11 +11,11 @@ const navlinks = [
         linkTitle: "All Books"
     },
     {
-        linkUrl: "/",
+        linkUrl: "/signup",
         linkTitle: "Sign Up"
     },
     {
-        linkUrl: "/",
+        linkUrl: "/login",
         linkTitle: "Log in"
     },
 ]
