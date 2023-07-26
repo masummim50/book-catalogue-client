@@ -3,18 +3,17 @@ import { useForm } from "react-hook-form";
 
 type FormData = {
   bookTitle: string;
-  lastName: string;
+  bookAuthor: string;
+  bookGenre: string;
 };
 
 export default function AddBookForm() {
   const {
     register,
-    setValue,
     handleSubmit,
     formState: { errors },
   } = useForm<FormData>();
   const onSubmit = handleSubmit((data) => console.log(data));
-  // firstName and lastName will have correct type
 
   return (
     <div className="mx-auto w-[600px] ">
@@ -22,17 +21,26 @@ export default function AddBookForm() {
         <label className="block">Book Title</label>
         <input
           className="border rounded focus:outline-none py-2 w-full"
-          placeholder="Book Title"
+          placeholder="Type Book Title"
           {...register("bookTitle")}
         />
 
-        <label className="block">Book Title</label>
+        <label className="block">Book Author</label>
         <input
           className="border rounded focus:outline-none py-2 w-full"
-          placeholder="Book Title"
-          {...register("bookTitle")}
+          placeholder="Type Book Author"
+          {...register("bookAuthor")}
+        />
+        <label className="block">Book Genre</label>
+        <input
+          className="border rounded focus:outline-none py-2 w-full"
+          placeholder="Type Book Genre"
+          {...register("bookGenre")}
         />
 
+        <div className="block text-right">
+          <button type="submit" className="bg-purple-400 px-4 py-2 text-white shadow-md mt-2 hover:bg-purple-600 hover:color-white">Add Book</button>
+        </div>
         {/* <button
         type="button"
         onClick={() => {}}
