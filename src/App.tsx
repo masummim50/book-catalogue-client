@@ -1,34 +1,31 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 
-
-import { useEffect } from 'react'
+import React , { useEffect }from 'react' 
 import './App.css'
 import AppRouter from './AppRouter'
 import { useAppDispatch } from './redux/hooks'
 import { setUser } from './redux/features/user/userSlice'
-import jwt from 'jsonwebtoken'
+import { useVerifyTokenMutation } from './redux/features/user/userApi'
 
 function App() {
   const dispatch = useAppDispatch()
 
-  useEffect(()=> {
-    const data = localStorage.getItem("bookClubAuth")
-    const token = localStorage.getItem("token");
-    if(token){
-      const decoded = jwt.verify(token, import.meta.env.VITE_JWT_SECRET_KEY);
-      console.log(decoded)
-      console.log(import.meta.env.VITE_JWT_SECRET_KEY, "consoling token")
-    }
-    if(data){
-      const userData = JSON.parse(data);
-      dispatch(setUser(userData))
-      console.log("dispatched set user")
-    }
-    
-  },[])
+  const [verifyToken, {isLoading, isError, isSuccess, data}] = useVerifyTokenMutation();
 
+  useEffect(()=> {
+    verifyToken(undefined)
+  }, [])
+
+  console.log("app rendering")
   return (
     <>
-      <AppRouter/>
+    {
+      isLoading && <p>loading...</p>
+    }{
+      isSuccess || isError &&
+    <AppRouter/>
+    }
+      
     </>
   )
 }
