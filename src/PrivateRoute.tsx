@@ -6,7 +6,7 @@ const PrivateRoute = () => {
     const user = useAppSelector(state=> state.user);
     console.log('user', user)
     return (
-        user.user? <Outlet/> : <Navigate to="/login"/>
+        user? <Outlet/> : <Navigate to="/login"/>
     );
 };
 

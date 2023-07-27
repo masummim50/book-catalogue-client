@@ -1,6 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const initialState = {}
+type stateType = {
+    accessToken:string,
+    user:object
+}
+const initialState:stateType = {
+} as stateType;
 
 const userSlice = createSlice({
     name: 'user',
@@ -11,7 +16,7 @@ const userSlice = createSlice({
             return state = action.payload;
         },
         removeUser: (state)=> {
-            return state = {};
+            return state = {} as stateType;
         }
     }
 })

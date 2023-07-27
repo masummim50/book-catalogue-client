@@ -20,6 +20,8 @@ const Login = () => {
         console.log(data)
         if(isSuccess && data){
             dispatch(setUser(data.data));
+            localStorage.setItem("bookClubAuth", JSON.stringify(data.data))
+            localStorage.setItem("token", data.data.accessToken)
         }
     }, [data, isSuccess])
     
