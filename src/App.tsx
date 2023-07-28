@@ -3,12 +3,9 @@
 import React , { useEffect }from 'react' 
 import './App.css'
 import AppRouter from './AppRouter'
-import { useAppDispatch } from './redux/hooks'
-import { setUser } from './redux/features/user/userSlice'
 import { useVerifyTokenMutation } from './redux/features/user/userApi'
 
 function App() {
-  const dispatch = useAppDispatch()
 
   const [verifyToken, {isLoading, isError, isSuccess, data}] = useVerifyTokenMutation();
 
@@ -22,7 +19,7 @@ function App() {
     {
       isLoading && <p>loading...</p>
     }{
-      isSuccess || isError &&
+      (isSuccess || isError) && 
     <AppRouter/>
     }
       

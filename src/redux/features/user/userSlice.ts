@@ -11,7 +11,6 @@ const userSlice = createSlice({
     initialState,
     reducers: {
         setUser: (state, action)=> {
-            console.log(JSON.stringify(action))
             return state = action.payload;
         },
         removeUser: (state)=> {

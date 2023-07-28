@@ -22,12 +22,17 @@ const userApi = api.injectEndpoints({
                 url: "/auth/verifyAccessToken",
                 method: 'POST'
             }),
-            async onQueryStarted(arg, {dispatch, getState, queryFulfilled}){
+            async onQueryStarted(arg, {dispatch, queryFulfilled}){
+                console.log("query starting")
                 const data = await queryFulfilled;
-                console.log("after query fullfilled", data)
+                console.log("wheather query fullfilled", data)
+                if(data.data.data){
+                    console.log("after query fullfilled", data)
                 const token = localStorage.getItem("token");
                 const storeData = {accessToken: token, user: data.data.data}
                 dispatch(setUser(storeData))
+                }
+                
             }
         })
     })

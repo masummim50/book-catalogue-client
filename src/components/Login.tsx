@@ -3,8 +3,9 @@ import { useForm } from "react-hook-form";
 import React, { useEffect } from 'react';
 import { useLoginMutation } from "../redux/features/user/userApi";
 import { setUser } from "../redux/features/user/userSlice";
-import { useDispatch } from 'react-redux';
+// import { useDispatch } from 'react-redux';
 import { useAppDispatch } from "../redux/hooks";
+import { useNavigate } from "react-router-dom";
 
 type FormData = {
   email: string;
@@ -13,15 +14,17 @@ type FormData = {
 
 const Login = () => {
     const dispatch = useAppDispatch()
+    const navigate = useNavigate()
 
-    const [login, {isError, isLoading, isSuccess, data}] = useLoginMutation();
+    const [login, { isSuccess, data}] = useLoginMutation();
 
     useEffect(()=> {
         console.log(data)
         if(isSuccess && data){
             dispatch(setUser(data.data));
-            localStorage.setItem("bookClubAuth", JSON.stringify(data.data))
-            localStorage.setItem("token", data.data.accessToken)
+            // localStorage.setItem("bookClubAuth", JSON.stringify(data.data))
+            localStorage.setItem("token", data.data.accessToken);
+            navigate("/")
         }
     }, [data, isSuccess])
     

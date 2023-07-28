@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { removeUser } from "../redux/features/user/userSlice";
 import { useAppDispatch } from "../redux/hooks";
 
@@ -24,6 +24,11 @@ const navlinks = [
 
 const Header = () => {
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+  const handleLogout = ()=> {
+    dispatch(removeUser());
+    navigate("/login")
+  }
   return (
     <div className="flex justify-between w-100 items-center bg-purple-200 py-6 px-2 rounded-b">
       <div className=" text-center">Logo</div>
@@ -47,7 +52,7 @@ const Header = () => {
           </Link>
         ))}
         <div
-            onClick={()=> dispatch(removeUser())}
+            onClick={()=> handleLogout()}
             className="px-6 py-1 border border-purple-400 rounded ml-2 bg-purple-400 hover:bg-purple-600 hover:text-white transition-all"
             
           >
