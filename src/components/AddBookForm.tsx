@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useAddBookMutation } from "../redux/features/book/bookApi";
 
@@ -11,16 +11,31 @@ type FormData = {
 };
 
 export default function AddBookForm() {
-  const [addBook] =
+
+  const [success, setSuccess] = useState(false);
+  const [addBook, {isSuccess}] =
     useAddBookMutation();
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm<FormData>();
   const onSubmit = handleSubmit((data) => {
     addBook(data)
   });
+
+  // to show success message
+ 
+  useEffect(()=> {
+    if(isSuccess){
+      setSuccess(true)
+      reset()
+      setTimeout(() => {
+        setSuccess(false)
+      }, 1000);
+    }
+  }, [isSuccess])
 
   return (
     <div className="mx-auto w-[600px] ">
@@ -52,6 +67,8 @@ export default function AddBookForm() {
           {...register("date")}
         />
 
+        <span className={`${success ? "opacity-1": "opacity-0"} text-right text-green-600 font-bold block`}>Book Added SuccessFully</span>
+        <span>Something went wrong</span>
         <div className="block text-right">
           <button
             type="submit"
