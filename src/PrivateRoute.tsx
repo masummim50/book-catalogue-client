@@ -4,11 +4,11 @@ import { Navigate, Outlet } from 'react-router-dom';
 import { RootState } from './redux/store';
 
 const PrivateRoute = () => {
-    const user = useAppSelector((state:RootState)=> state.user);
+    const user = useAppSelector((state:RootState)=> state.user.user.name);
     console.log("just state.user", user)
     console.log('user', user)
     return (
-        user?.user ? <Outlet/> : <Navigate to="/login"/>
+        user ? <Outlet/> : <Navigate to="/login"/>
     );
 };
 

@@ -7,10 +7,10 @@ import { RootState } from '../redux/store';
 
 const LoginPage = () => {
     const navigate = useNavigate();
-    const user = useAppSelector((state:RootState)=> state.user)
+    const user = useAppSelector((state:RootState)=> state.user.user.name)
 
     useEffect(()=> {
-        if(user?.user){
+        if(user){
             navigate("/")
         }
     },[])

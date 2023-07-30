@@ -5,6 +5,8 @@ import HomePage from './pages/HomePage';
 import LoginPage from './pages/LoginPage';
 import SignUpPage from './pages/SignUpPage';
 import PrivateRoute from './PrivateRoute';
+import BookDetailsPage from './pages/BookDetailsPage';
+import NotFound from './pages/NotFound';
 
 
 const AppRouter = () => {
@@ -17,9 +19,10 @@ const AppRouter = () => {
                 <Route element={<PrivateRoute/>}>
                     <Route path='/add-book' element={<AddBookPage/>}/>
                 </Route>
-                
+                <Route path="/book/:id" element={<BookDetailsPage/>}/>
                 <Route path="/login" element={<LoginPage/>}/>
                 <Route path="/signUp" element={<SignUpPage/>}/>
+                <Route path="*" element={<NotFound/>}/>
             </Routes>
         </BrowserRouter>
     );
