@@ -13,6 +13,7 @@ const Header = () => {
   const navigate = useNavigate();
   const handleLogout = () => {
     dispatch(removeUser(undefined));
+    localStorage.clear()
     navigate("/login");
   };
 

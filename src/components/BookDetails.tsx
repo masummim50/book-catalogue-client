@@ -4,6 +4,8 @@ import { useGetBookByIdQuery } from '../redux/features/book/bookApi';
 import { useParams } from 'react-router-dom';
 import { useAppSelector } from '../redux/hooks';
 import { RootState } from '../redux/store';
+import ReviewSection from './ReviewSection';
+import ReviewSlider from './ReviewSlider';
 
 const BookDetails = () => {
     const user = useAppSelector((state:RootState)=> state.user.user)
@@ -46,17 +48,14 @@ const BookDetails = () => {
                 </div>
                 }
                  {/* add or edit your review */}
-                 <div className="mt-3">
-                    {
-                        data.data.reviews.find((review)=> review._id === user._id)
-                         ?
-                         <button className='bg-purple-300 px-4 py-2 rounded-lg hover:bg-purple-400 mr-2'>Edit Your Review</button>
-                         :
-                         <button className='bg-purple-300 px-4 py-2 rounded-lg hover:bg-purple-400 mr-2'>Add A Review+</button>
-                }
-                </div>
+                 {
+                    user.email && 
+                 <ReviewSection reviews={data.data.reviews}/>
+                 }
+                 
     
                  {/* The review slider */}
+                 <ReviewSlider reviews={data.data.reviews}/>
                 </div>
             }
         </>  
