@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 
-import React , { useEffect }from 'react' 
+import React , { useEffect, useState }from 'react' 
 import './App.css'
 import AppRouter from './AppRouter'
 import { useVerifyTokenMutation } from './redux/features/user/userApi'
@@ -8,18 +8,26 @@ import { useVerifyTokenMutation } from './redux/features/user/userApi'
 function App() {
 
   const [verifyToken, {isLoading, isError, isSuccess, data}] = useVerifyTokenMutation();
-
+  const [token, setToken] = useState("")
+  
   useEffect(()=> {
-    verifyToken(undefined)
+    const token = localStorage.getItem("token");
+    if(token){
+      setToken(token)
+      verifyToken(undefined)
+    }
   }, [])
 
-  console.log("app rendering")
   return (
     <>
     {
       isLoading && <p>loading...</p>
-    }{
-      (isSuccess || isError) && 
+    }
+    {
+      !token && <AppRouter/>
+    }
+    {
+      ((isSuccess || isError)) &&
     <AppRouter/>
     }
       

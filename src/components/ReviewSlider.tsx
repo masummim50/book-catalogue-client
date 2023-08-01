@@ -19,7 +19,7 @@ interface IReview {
 
 const ReviewSlider: React.FC<ReviewProps> = ({ reviews }) => {
   return (
-    <Swiper slidesPerView={4} loop={true}>
+    <Swiper slidesPerView={4} loop={true} className="mt-5">
       {reviews
         .map((review:IReview) => (
           <SwiperSlide className="bg-purple-100 rounded-lg p-4 mr-2">

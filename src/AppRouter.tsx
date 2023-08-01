@@ -10,7 +10,6 @@ import NotFound from './pages/NotFound';
 
 
 const AppRouter = () => {
-    console.log("rendering approuter")
    
     return (
         <BrowserRouter>

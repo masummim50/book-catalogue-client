@@ -5,18 +5,22 @@ import { useLoginMutation } from "../redux/features/user/userApi";
 import { setUser } from "../redux/features/user/userSlice";
 // import { useDispatch } from 'react-redux';
 import { useAppDispatch } from "../redux/hooks";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 type FormData = {
   email: string;
   password: string;
 };
 
+
 const Login = () => {
     const dispatch = useAppDispatch()
-    const navigate = useNavigate()
+    const navigate = useNavigate();
+    const {state} = useLocation();
+    console.log("state", state)
 
-    const [login, { isSuccess, data}] = useLoginMutation();
+
+    const [login, { isSuccess, data, isError, error}] = useLoginMutation();
 
     useEffect(()=> {
         console.log(data)
@@ -24,9 +28,19 @@ const Login = () => {
             dispatch(setUser(data.data));
             // localStorage.setItem("bookClubAuth", JSON.stringify(data.data))
             localStorage.setItem("token", data.data.accessToken);
-            navigate("/")
+            if(state){
+              navigate(state)
+            }else{
+              navigate("/")
+            }
         }
     }, [data, isSuccess])
+
+    useEffect(()=> {
+      if(isError){
+        console.log(error, "error message")
+      }
+    },[isError, error])
     
   const {
     register,
@@ -39,6 +53,10 @@ const Login = () => {
 
   return (
     <div className="mx-auto w-[600px] ">
+      {
+        isError &&
+        <p className="text-red-600">{error.data.message}</p>
+      }
       <form onSubmit={onSubmit}>
         <label className="block">email</label>
         <input

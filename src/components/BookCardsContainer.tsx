@@ -132,10 +132,7 @@ const BookCardsContainer = () => {
 
   const {isLoading, isError, data, isSuccess} = useGetBooksQuery(undefined);
 
-  useEffect(()=> {
-    console.log("useeffect running")
-    console.log(data)
-  },[data])
+
 
     return (
         <div className='max-w-[1100px] m-auto mt-6'>

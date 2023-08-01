@@ -23,13 +23,16 @@ const userApi = api.injectEndpoints({
         method: "POST",
       }),
       async onQueryStarted(arg, { dispatch, queryFulfilled }) {
-        console.log("query starting");
+        try{
         const data = await queryFulfilled;
         if (data.data.data) {
           const token = localStorage.getItem("token");
           const storeData = { accessToken: token, user: data.data.data };
           dispatch(setUser(storeData));
         }
+      }catch(error){
+        console.log(error)
+      }
       },
     }),
   }),

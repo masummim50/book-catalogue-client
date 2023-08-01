@@ -1,14 +1,15 @@
 import React from 'react';
 import { useAppSelector } from './redux/hooks';
-import { Navigate, Outlet } from 'react-router-dom';
+import { Navigate, Outlet, useLocation } from 'react-router-dom';
 import { RootState } from './redux/store';
 
 const PrivateRoute = () => {
     const user = useAppSelector((state:RootState)=> state.user.user.name);
-    console.log("just state.user", user)
-    console.log('user', user)
+
+    const prevLocation = useLocation();
+    console.log("from private route", prevLocation)
     return (
-        user ? <Outlet/> : <Navigate to="/login"/>
+        user ? <Outlet/> : <Navigate state={prevLocation.pathname} to="/login"/>
     );
 };
 
