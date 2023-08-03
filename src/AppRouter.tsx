@@ -7,6 +7,7 @@ import SignUpPage from './pages/SignUpPage';
 import PrivateRoute from './PrivateRoute';
 import BookDetailsPage from './pages/BookDetailsPage';
 import NotFound from './pages/NotFound';
+import EditBookPage from './pages/EditBookPage';
 
 
 const AppRouter = () => {
@@ -17,6 +18,7 @@ const AppRouter = () => {
                 <Route path='/' element={<HomePage/>}/>
                 <Route element={<PrivateRoute/>}>
                     <Route path='/add-book' element={<AddBookPage/>}/>
+                    <Route path='/book/edit/:id' element={<EditBookPage/>}/>
                 </Route>
                 <Route path="/book/:id" element={<BookDetailsPage/>}/>
                 <Route path="/login" element={<LoginPage/>}/>

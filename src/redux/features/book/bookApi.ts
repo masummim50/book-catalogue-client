@@ -4,6 +4,7 @@ const bookApi = api.injectEndpoints({
   endpoints: (builder) => ({
     getBooks: builder.query({
       query: () => "/books",
+      providesTags: ["books"]
     }),
     getBookById: builder.query({
       query: (id) => `/book/${id}`,
@@ -13,12 +14,20 @@ const bookApi = api.injectEndpoints({
         console.log("get book by id data", data);
       },
     }),
+    deleteBookById: builder.mutation({
+      query: (id)=> ({
+        url:`/book/${id}`,
+        method:'DELETE'
+      }),
+      invalidatesTags: ["books"]
+    }),
     addBook: builder.mutation({
       query: (data) => ({
         url: "/book",
         method: "POST",
         body: data,
       }),
+      invalidatesTags: ["books"]
     }),
     addReview: builder.mutation({
       query: (arg) => ({
@@ -29,25 +38,37 @@ const bookApi = api.injectEndpoints({
       async onQueryStarted(arg, { dispatch, queryFulfilled }) {
         try {
           const data = await queryFulfilled;
-          console.log("review query fullfilled", data);
-          const patchResult = dispatch(
+          dispatch(
             api.util.updateQueryData("getBookById", arg.id, (draft) => {
-              console.log(
-                JSON.stringify(draft),
-                data,
-                "after query fullfilled"
-              );
+              
               return draft = data.data;
             })
-            //   api.util.updateQueryData('getBookById', id, (draft) => {
-            //     Object.assign(draft, updatedPost)
-            //   })
           );
         } catch (error) {
           console.log("path error", error);
         }
       },
     }),
+    updateReview: builder.mutation({
+      query: (arg)=> ({
+        url:`/book/review/${arg.id}`,
+        method: 'PATCH',
+        body: arg.review
+      }),
+      async onQueryStarted(arg, {dispatch,queryFulfilled}){
+        try {
+          const data = await queryFulfilled;
+          dispatch(
+            api.util.updateQueryData("getBookById", arg.id, (draft) => {
+              
+              return draft = data.data;
+            })
+          );
+        } catch (error) {
+          console.log("path error", error);
+        }
+      }
+    })
   }),
 });
 
@@ -56,4 +77,6 @@ export const {
   useGetBookByIdQuery,
   useAddBookMutation,
   useAddReviewMutation,
+  useUpdateReviewMutation,
+  useDeleteBookByIdMutation
 } = bookApi;
