@@ -7,7 +7,7 @@ const PrivateRoute = () => {
     const user = useAppSelector((state:RootState)=> state.user.user.name);
 
     const prevLocation = useLocation();
-    console.log("from private route", prevLocation)
+    
     return (
         user ? <Outlet/> : <Navigate state={prevLocation.pathname} to="/login"/>
     );

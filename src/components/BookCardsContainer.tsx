@@ -140,13 +140,13 @@ const BookCardsContainer = () => {
             <div className="grid bg-purple-200 grid-cols-4">
                 {
                     data?.data?.map(book=> (
-                        <Link to={`/book/${book._id}`} className='bg-white border rounded mb-2 mx-2 p-2'>
+                        <Link to={`/book/${book._id}`} key={book._id} className='bg-white border rounded mb-2 mx-2 p-2'>
                             <h2 className='text-[20px] font-bold title'>{book.title}</h2>
                             <span className='inline font-bold text-gray-500'>Author: </span>
                             <p className='inline font-thin'>{book.author}</p>
                             <br/>
                             <span className='inline font-bold text-gray-500'>Posted By: </span>
-                            <p className='inline font-thin'>{book.addedBy.name}</p>
+                            <p className='inline font-thin'>{book?.addedBy?.name}</p>
                         </Link>
                     ))
                 }
