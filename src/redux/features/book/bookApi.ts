@@ -6,6 +6,14 @@ const bookApi = api.injectEndpoints({
       query: () => "/books",
       providesTags: ["books"]
     }),
+    getRecentBooks: builder.query({
+      query: ()=> "/books/recent",
+      providesTags: ["recentBooks"]
+    }),
+    getYears: builder.query({
+      query: ()=> "/books/years",
+      providesTags: ["years"]
+    }),
     getBookById: builder.query({
       query: (id) => `/book/${id}`,
       providesTags: ["SingleBook"],
@@ -27,7 +35,7 @@ const bookApi = api.injectEndpoints({
         method: "POST",
         body: data,
       }),
-      invalidatesTags: ["books"]
+      invalidatesTags: ["books", "recentBooks"]
     }),
     updateBook: builder.mutation({
       query: (arg) => ({
@@ -76,16 +84,71 @@ const bookApi = api.injectEndpoints({
           console.log("path error", error);
         }
       }
+    }),
+    deleteReview: builder.mutation({
+      query: (arg)=> ({
+        url:`/book/review/${arg.id}`,
+        method: 'DELETE',
+        body: arg.review
+      }),
+      async onQueryStarted(arg, {dispatch,queryFulfilled}){
+        try {
+          const data = await queryFulfilled;
+          dispatch(
+            api.util.updateQueryData("getBookById", arg.id, (draft) => {
+              
+              return draft = data.data;
+            })
+          );
+        } catch (error) {
+          console.log("path error", error);
+        }
+      }
+    }),
+    addBookToWishlist: builder.mutation({
+      query: (arg)=> ({
+        url: `book/wishlist/${arg}`,
+        method:'PATCH'
+      }),
+      invalidatesTags: ['lists']
+    }),
+    removeBookFromWishlist: builder.mutation({
+      query: (arg)=> ({
+        url: `book/wishlist/remove/${arg}`,
+        method:'PATCH'
+      }),
+      invalidatesTags: ['lists']
+    }),
+    removeBookFromReadingList: builder.mutation({
+      query: (arg)=> ({
+        url: `book/readingList/remove/${arg}`,
+        method:'PATCH'
+      }),
+      invalidatesTags: ['lists']
+    }),
+    addBookToReadingList: builder.mutation({
+      query: (arg)=> ({
+        url: `book/reading/${arg}`,
+        method:'PATCH'
+      }),
+      invalidatesTags: ['lists']
     })
   }),
 });
 
 export const {
   useGetBooksQuery,
+  useGetRecentBooksQuery,
   useGetBookByIdQuery,
   useAddBookMutation,
   useAddReviewMutation,
   useUpdateReviewMutation,
   useDeleteBookByIdMutation,
-  useUpdateBookMutation
+  useUpdateBookMutation,
+  useDeleteReviewMutation,
+  useAddBookToWishlistMutation,
+  useAddBookToReadingListMutation,
+  useRemoveBookFromWishlistMutation,
+  useRemoveBookFromReadingListMutation,
+  useGetYearsQuery
 } = bookApi;

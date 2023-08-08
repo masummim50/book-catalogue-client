@@ -7,6 +7,7 @@ import {
   useUpdateBookMutation,
 } from "../redux/features/book/bookApi";
 import { useParams } from "react-router-dom";
+import { bookGenres } from "./AddBookForm";
 
 type FormData = {
   title: string;
@@ -73,12 +74,14 @@ export default function EditBookForm() {
               {...register("author")}
             />
             <label className="block">Book Genre</label>
-            <input
-              defaultValue={data.data.genre}
-              className="border rounded focus:outline-none py-2 w-full"
-              placeholder="Type Book Genre"
-              {...register("genre")}
-            />
+            <select className="border rounded focus:outline-none py-2 w-full" {...register("genre")}>
+          <option hidden value={""}>Select Genre</option>
+          {
+            bookGenres.map(genre=> (
+              <option value={genre}>{genre}</option>
+            ))
+          }
+        </select>
             <label className="block">Book Genre</label>
             <input
               defaultValue={data.data.date ? new Date(data.data.date).toISOString().substr(0, 10) : ''}

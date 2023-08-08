@@ -1,37 +1,74 @@
 // import React, { useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { removeUser } from "../redux/features/user/userSlice";
 import { useAppDispatch, useAppSelector } from "../redux/hooks";
 import { RootState } from "../redux/store";
+import { bookGenres } from "./AddBookForm";
+import { useGetYearsQuery } from "../redux/features/book/bookApi";
+import { useEffect } from "react";
+import { resetFilter, setGenre, setYear } from "../redux/features/book/bookSlice";
 
 const headerStyles =
   "px-6 py-1 border border-purple-400 rounded ml-2 bg-purple-400 hover:bg-purple-600 hover:text-white transition-all";
 
 const Header = () => {
+  const filter = useAppSelector((state:RootState)=> state.filter)
+  const { data } = useGetYearsQuery(undefined);
+  const location = useLocation();
   const user = useAppSelector((state: RootState) => state.user.user.name);
   const dispatch = useAppDispatch();
   const handleLogout = () => {
     dispatch(removeUser(undefined));
-    localStorage.clear()
+    localStorage.clear();
   };
+
+  useEffect(() => {
+    console.log("years", data?.data);
+  }, [data]);
 
   return (
     <div
       id="header"
-      className="flex justify-between w-100 items-center bg-purple-200 py-6 px-2 rounded-b"
+      className="flex justify-between w-100 items-center bg-purple-200 px-2 rounded-b"
     >
       <Link to="/" className=" text-center">
         Logo
       </Link>
-      <div className="search">
+      <div className="search flex-1 p-4 text-center">
         <input
           type="text"
           className="border focus:outline-none py-2 px-4 rounded"
           placeholder="Enter search item"
         />
-        <button className="border py-2 px-4 rounded bg-purple-300 hover:bg-purple-400 transition-all">
+        <button className="border py-2 mb-2 px-4 rounded bg-purple-300 hover:bg-purple-400 transition-all">
           Search
         </button>
+        <br />
+        {location.pathname === "/" && (
+          <select onChange={(e)=> dispatch(setGenre(e.target.value))} className="border rounded focus:outline-none py-2">
+
+            <option hidden value="">
+              Select Genre
+            </option>
+            {bookGenres.map((genre) => (
+              <option selected={filter.genre === genre} value={genre}>{genre}</option>
+            ))}
+          </select>
+        )}
+
+        {location.pathname === "/" && (
+          <select onChange={(e)=> dispatch(setYear(e.target.value))} className="border rounded focus:outline-none py-2">
+            <option hidden value="">
+              Select Year
+            </option>
+            {data?.data.map((year:{year:string}) => (
+              <option selected={filter.year == year.year.toString()} value={year.year}>{year.year}</option>
+            ))}
+          </select>
+        )}
+        {
+          <button className="bg-white px-3 py-2" onClick={()=>dispatch(resetFilter())}>Reset Filter</button>
+        }
       </div>
       <div className="flex">
         {/* {navlinks.map((link) => (
@@ -46,7 +83,7 @@ const Header = () => {
           Add Book
         </Link>
 
-        <Link className={headerStyles} to="/">
+        <Link className={headerStyles} to="/books">
           All Books
         </Link>
         {!user && (

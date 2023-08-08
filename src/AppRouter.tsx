@@ -8,6 +8,7 @@ import PrivateRoute from './PrivateRoute';
 import BookDetailsPage from './pages/BookDetailsPage';
 import NotFound from './pages/NotFound';
 import EditBookPage from './pages/EditBookPage';
+import AllBooksPage from './pages/AllBooksPage';
 
 
 const AppRouter = () => {
@@ -16,6 +17,7 @@ const AppRouter = () => {
         <BrowserRouter>
             <Routes>
                 <Route path='/' element={<HomePage/>}/>
+                <Route path='/books' element={<AllBooksPage/>}/>
                 <Route element={<PrivateRoute/>}>
                     <Route path='/add-book' element={<AddBookPage/>}/>
                     <Route path='/book/edit/:id' element={<EditBookPage/>}/>

@@ -22,7 +22,7 @@ const ReviewSlider: React.FC<ReviewProps> = ({ reviews }) => {
     <Swiper slidesPerView={4} loop={true} className="mt-5">
       {reviews
         .map((review:IReview) => (
-          <SwiperSlide className="bg-purple-100 rounded-lg p-4 mr-2">
+          <SwiperSlide key={review._id} className="bg-purple-100 rounded-lg p-4 mr-2">
             <div className="flex items-center">
                 <div className="bg-purple-400 p-4 mr-2 rounded-[50%] text-white font-bold">{review.user.name.slice(0,1).toUpperCase()}</div>
                 <div>

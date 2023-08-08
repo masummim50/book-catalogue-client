@@ -18,6 +18,6 @@ export const api = createApi({
       return headers;
     },
   }),
-  tagTypes: ["SingleBook", "books"],
+  tagTypes: ["SingleBook", "books", "lists", "recentBooks", "years"],
   endpoints: () => ({}),
 });

@@ -9,6 +9,29 @@ type FormData = {
   genre: string;
   date: string;
 };
+export const bookGenres = [
+  "Fiction",
+  "Non-Fiction",
+  "Mystery",
+  "Thriller",
+  "Science Fiction",
+  "Fantasy",
+  "Romance",
+  "Historical Fiction",
+  "Biography",
+  "Autobiography",
+  "Self-Help",
+  "Horror",
+  "Adventure",
+  "Poetry",
+  "Drama",
+  "Comedy",
+  "Children's",
+  "Young Adult",
+  "Classic",
+  "Crime",
+  "Graphic Novel",
+];
 
 export default function AddBookForm() {
 
@@ -54,11 +77,19 @@ export default function AddBookForm() {
           {...register("author")}
         />
         <label className="block">Book Genre</label>
-        <input
+        <select className="border rounded focus:outline-none py-2 w-full" {...register("genre")}>
+          <option hidden value={""}>Select Genre</option>
+          {
+            bookGenres.map(genre=> (
+              <option value={genre}>{genre}</option>
+            ))
+          }
+        </select>
+        {/* <input
           className="border rounded focus:outline-none py-2 w-full"
           placeholder="Type Book Genre"
           {...register("genre")}
-        />
+        /> */}
         <label className="block">Book Genre</label>
         <input
         type="date"
