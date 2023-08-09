@@ -10,6 +10,7 @@ import NotFound from './pages/NotFound';
 import EditBookPage from './pages/EditBookPage';
 import AllBooksPage from './pages/AllBooksPage';
 import SearchPage from './pages/SearchPage';
+import CardSkeleton from './ui/loadingSkeletons/CardSkeleton';
 
 
 const AppRouter = () => {
@@ -17,6 +18,7 @@ const AppRouter = () => {
     return (
         <BrowserRouter>
             <Routes>
+                <Route path='/skel' element={<CardSkeleton/>}/>
                 <Route path='/' element={<HomePage/>}/>
                 <Route path='/books' element={<AllBooksPage/>}/>
                 <Route path="/search/:searchtext" element={<SearchPage/>}/>

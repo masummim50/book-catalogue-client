@@ -16,6 +16,7 @@ import ReviewSlider from "./ReviewSlider";
 import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
 import { BsBook, BsBookFill } from "react-icons/bs";
 import { useGetListsQuery } from "../redux/features/user/userApi";
+import DetailsSkeleton from "../ui/loadingSkeletons/DetailsSkeleton";
 
 const BookDetails = () => {
   // if book deletion is success then invisible the whole thing, and show a deletion message and redirect
@@ -23,34 +24,33 @@ const BookDetails = () => {
   const navigate = useNavigate();
   const [hideDetails, setHideDetails] = useState(false);
   const user = useAppSelector((state: RootState) => state.user.user);
-  const { isSuccess, data } = useGetBookByIdQuery(id);
+  const { isSuccess, data, isLoading } = useGetBookByIdQuery(id);
 
   const { data: lists, isSuccess: listSuccess } = useGetListsQuery(undefined);
-
 
   const [addBookToWishlist] = useAddBookToWishlistMutation();
   const [addBookToReadingList] = useAddBookToReadingListMutation();
   const [removeBookFromWishlist] = useRemoveBookFromWishlistMutation();
-  const [removeFromReadingList] = useRemoveBookFromReadingListMutation()
+  const [removeFromReadingList] = useRemoveBookFromReadingListMutation();
 
   const [deleteBook, { isSuccess: deleteSuccess }] =
     useDeleteBookByIdMutation();
 
-  const [showConfirmDeletePopup, setShowConfirmDeletePopup] = useState(false)
+  const [showConfirmDeletePopup, setShowConfirmDeletePopup] = useState(false);
   const handleDelete = () => {
-    setShowConfirmDeletePopup(true)
+    setShowConfirmDeletePopup(true);
   };
 
-  const handleConfirmDelete = ()=> {
+  const handleConfirmDelete = () => {
     deleteBook(id);
-  }
-  const handleCancelDelete = ()=> {
-    setShowConfirmDeletePopup(false)
-  }
+  };
+  const handleCancelDelete = () => {
+    setShowConfirmDeletePopup(false);
+  };
   // run another useeffect to see if the book deleted successfully
   useEffect(() => {
     if (deleteSuccess) {
-      setShowConfirmDeletePopup(false)
+      setShowConfirmDeletePopup(false);
       setHideDetails(true);
       setTimeout(() => {
         navigate("/");
@@ -78,6 +78,11 @@ const BookDetails = () => {
 
   return (
     <>
+      {isLoading && (
+        <div className={`mt-5 max-w-[1100px] px-2 m-auto`}>
+          <DetailsSkeleton />
+        </div>
+      )}
       {/* show the delete message here */}
       {hideDetails && deleteSuccess && (
         <>
@@ -113,47 +118,67 @@ const BookDetails = () => {
               {new Date(data.data.date).toDateString()}
             </p>
           </div>
+          {user.email && (
+            <>
+              {lists?.data?.wishlist?.find((book) => book._id === id) ? (
+                <button
+                  onClick={() => handleRemoveBookFromWishlist()}
+                  className="bg-red-400  px-3 py-2 rounded-md hover:bg-red-600 font-bold text-white"
+                >
+                  Remove From WishList{" "}
+                  <AiFillHeart className="inline text-white" />
+                </button>
+              ) : (
+                <button
+                  onClick={() => handleAddToWishlist()}
+                  className="bg-green-100 px-3 py-2 mr-2 rounded-md hover:bg-green-200 font-bold"
+                >
+                  Add To WishList{" "}
+                  <AiOutlineHeart className="inline text-green-900" />
+                </button>
+              )}
 
-          {/* decide wishlist button */}
-          {lists?.data?.wishlist?.find(book=>book._id ===id) ? (
-            <button
-              onClick={() => handleRemoveBookFromWishlist()}
-              className="bg-red-400  px-3 py-2 rounded-md hover:bg-red-600 font-bold text-white"
-            >
-              Remove From WishList <AiFillHeart className="inline text-white" />
-            </button>
-          ) : (
-            <button
-              onClick={() => handleAddToWishlist()}
-              className="bg-green-100 px-3 py-2 mr-2 rounded-md hover:bg-green-200 font-bold"
-            >
-              Add To WishList{" "}
-              <AiOutlineHeart className="inline text-green-900" />
-            </button>
+              {lists?.data?.reading?.find((book) => book._id === id) ? (
+                <button
+                  onClick={() => handleRemoveFromReadingList()}
+                  className="bg-red-400 px-3 py-2 rounded-md hover:bg-red-600 font-bold text-white"
+                >
+                  Remove From Reading List{" "}
+                  <BsBookFill className="inline  text-white" />
+                </button>
+              ) : (
+                <button
+                  onClick={() => handleAddToReadingList()}
+                  className="bg-green-100 px-3 mr-2 py-2 rounded-md hover:bg-green-200 font-bold"
+                >
+                  Add To Reading List{" "}
+                  <BsBook className="inline text-green-900" />
+                </button>
+              )}
+            </>
           )}
-
-          {lists?.data?.reading?.find(book=>book._id === id) ? (
-            <button
-              onClick={() => handleRemoveFromReadingList()}
-              className="bg-red-400 px-3 py-2 rounded-md hover:bg-red-600 font-bold text-white"
-            >
-              Remove From Reading List <BsBookFill className="inline  text-white" />
-            </button>
-          ) : (
-            <button
-              onClick={() => handleAddToReadingList()}
-              className="bg-green-100 px-3 mr-2 py-2 rounded-md hover:bg-green-200 font-bold"
-            >
-              Add To Reading List <BsBook className="inline text-green-900" />
-            </button>
-          )}
-
           {/* delete confirm option */}
-          <div className={`${showConfirmDeletePopup ? "" : "invisible"} h-full bg-gray-100 absolute top-0 left-0 text-center w-full opacity-70 z-10 flex items-center flex-col justify-center`}>
-            <p className="font-bold mb-2">Are you sure you want to delete this book?</p>
+          <div
+            className={`${
+              showConfirmDeletePopup ? "" : "invisible"
+            } h-full bg-gray-100 absolute top-0 left-0 text-center w-full opacity-70 z-10 flex items-center flex-col justify-center`}
+          >
+            <p className="font-bold mb-2">
+              Are you sure you want to delete this book?
+            </p>
             <div>
-            <button onClick={()=> handleConfirmDelete()} className="bg-red-600 text-white font-bold px-4 py-2 rounded-lg mr-2 hover:bg-red-800">Delete Book</button>
-            <button onClick={()=> handleCancelDelete()} className="bg-green-600 text-white font-bold px-4 py-2 rounded-lg mr-2 hover:bg-green-800">Cancel</button>
+              <button
+                onClick={() => handleConfirmDelete()}
+                className="bg-red-600 text-white font-bold px-4 py-2 rounded-lg mr-2 hover:bg-red-800"
+              >
+                Delete Book
+              </button>
+              <button
+                onClick={() => handleCancelDelete()}
+                className="bg-green-600 text-white font-bold px-4 py-2 rounded-lg mr-2 hover:bg-green-800"
+              >
+                Cancel
+              </button>
             </div>
           </div>
 

@@ -7,7 +7,6 @@ import { RootState } from "../redux/store";
 
 const SearchedResults = () => {
   const { searchtext } = useParams();
-  console.log(searchtext, "from useparams");
   const filter = useAppSelector((state:RootState)=> state.filter)
 
   const { data } = useGetSearchedBooksQuery(searchtext);

@@ -4,6 +4,7 @@ import React , { useEffect, useState }from 'react'
 import './App.css'
 import AppRouter from './AppRouter'
 import { useVerifyTokenMutation } from './redux/features/user/userApi'
+import DotLoading from './ui/DotLoading';
 
 function App() {
 
@@ -21,7 +22,7 @@ function App() {
   return (
     <>
     {
-      isLoading && <p>loading...</p>
+      isLoading &&  <DotLoading size='50px'/>
     }
     {
       !token && <AppRouter/>

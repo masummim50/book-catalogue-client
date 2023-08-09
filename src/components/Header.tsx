@@ -32,6 +32,16 @@ const Header = () => {
     navigate(`/search/${searchText}`)
   }
 
+  const handleSearchInputChange = (e)=> {
+    console.log(e.target.value)
+    if(e.key === "Enter"){
+      handleSearch()
+    }else{
+      dispatch(setSearchText(e.target.value))
+
+    }
+  }
+
   return (
     <div
       id="header"
@@ -45,13 +55,14 @@ const Header = () => {
           type="text"
           className="border focus:outline-none py-2 px-4 rounded"
           placeholder="Enter search item"
-          onChange={(e)=> dispatch(setSearchText(e.target.value))}
+          onKeyUp={(e)=> handleSearchInputChange(e)}
         />
         <button onClick={()=>handleSearch()} className="border py-2 mb-2 px-4 rounded bg-purple-300 hover:bg-purple-400 transition-all">
           Search
         </button>
         <br />
         {(location.pathname === "/" || location.pathname === "/books" || location.pathname === `/search/${searchText}`) && (
+          <>
           <select onChange={(e)=> dispatch(setGenre(e.target.value))} className="border rounded focus:outline-none py-2">
 
             <option hidden value="">
@@ -61,9 +72,9 @@ const Header = () => {
               <option selected={filter.genre === genre} value={genre}>{genre}</option>
             ))}
           </select>
-        )}
+         {/* )} */}
 
-        {(location.pathname === "/" || location.pathname === "/books" || location.pathname === `/search/${searchText}`) && (
+        {/* // {(location.pathname === "/" || location.pathname === "/books" || location.pathname === `/search/${searchText}`) && ( */}
           <select onChange={(e)=> dispatch(setYear(e.target.value))} className="border rounded focus:outline-none py-2">
             <option hidden value="">
               Select Year
@@ -72,9 +83,11 @@ const Header = () => {
               <option selected={filter.year == year.year.toString()} value={year.year}>{year.year}</option>
             ))}
           </select>
-        )}
-        {(location.pathname === "/" || location.pathname === "/books" || location.pathname === `/search/${searchText}`) &&
+         {/* )} */}
+         {/* {(location.pathname === "/" || location.pathname === "/books" || location.pathname === `/search/${searchText}`) && */}
           <button className="bg-white px-3 py-2" onClick={()=>dispatch(resetFilter())}>Reset Filter</button>
+          </>
+        )
         }
       </div>
       <div className="flex">
