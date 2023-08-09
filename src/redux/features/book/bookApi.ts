@@ -22,6 +22,9 @@ const bookApi = api.injectEndpoints({
         console.log("get book by id data", data);
       },
     }),
+    getSearchedBooks: builder.query({
+      query: (arg)=> `/books/search/${arg}`
+    }),
     deleteBookById: builder.mutation({
       query: (id)=> ({
         url:`/book/${id}`,
@@ -150,5 +153,6 @@ export const {
   useAddBookToReadingListMutation,
   useRemoveBookFromWishlistMutation,
   useRemoveBookFromReadingListMutation,
-  useGetYearsQuery
+  useGetYearsQuery,
+  useGetSearchedBooksQuery
 } = bookApi;

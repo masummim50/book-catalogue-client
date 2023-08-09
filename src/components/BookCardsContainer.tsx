@@ -133,6 +133,7 @@ const books = [
 ];
 
 const BookCardsContainer = () => {
+  let filteredBooks;
   const { isLoading, isError, data, isSuccess } =
     useGetRecentBooksQuery(undefined);
   const filter = useAppSelector((state: RootState) => state.filter);
@@ -140,8 +141,8 @@ const BookCardsContainer = () => {
   return (
     <div className="max-w-[1100px] m-auto mt-6">
       <h2 className="text-[25px] font-bold mb-5">Recently Added Books</h2>
-      <div className="grid bg-purple-200 grid-cols-4">
-        {data?.data
+      {/* <div className="grid bg-purple-200 grid-cols-4"> */}
+        {/* {data?.data
           ?.filter((book) => {
             if (filter.genre) {
               return book.genre === filter.genre;
@@ -172,8 +173,48 @@ const BookCardsContainer = () => {
               </span>
               <p className="inline font-thin">{book?.addedBy?.name}</p>
             </Link>
-          ))}
-      </div>
+          ))} */}
+
+
+<div className="grid bg-purple-200 grid-cols-4">
+  {data?.data &&
+    ((filteredBooks = data.data.filter((book) => {
+      if (filter.genre && book.genre !== filter.genre) {
+        return false;
+      }
+      if (filter.year) {
+        const bookYear = new Date(book.date).getFullYear();
+        if (bookYear.toString() !== filter.year) {
+          return false;
+        }
+      }
+      return true;
+    })),
+    filteredBooks.length > 0 ? (
+      filteredBooks.map((book) => (
+        <Link
+          to={`/book/${book._id}`}
+          key={book._id}
+          className="bg-white border rounded mb-2 mx-2 p-2"
+        >
+          <h2 className="text-[20px] font-bold title">{book.title}</h2>
+          <span className="inline font-bold text-gray-500">Author: </span>
+          <p className="inline font-thin">{book.author}</p>
+          <br />
+          <span className="inline font-bold text-gray-500">
+            Posted By:{" "}
+          </span>
+          <p className="inline font-thin">{book?.addedBy?.name}</p>
+        </Link>
+      ))
+    ) : (
+      <p>No books match the current filters.</p>
+    ))}
+</div>
+
+
+
+      {/* </div> */}
     </div>
   );
 };

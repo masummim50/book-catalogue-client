@@ -1,12 +1,12 @@
 // import React, { useEffect } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { removeUser } from "../redux/features/user/userSlice";
 import { useAppDispatch, useAppSelector } from "../redux/hooks";
 import { RootState } from "../redux/store";
 import { bookGenres } from "./AddBookForm";
 import { useGetYearsQuery } from "../redux/features/book/bookApi";
 import { useEffect } from "react";
-import { resetFilter, setGenre, setYear } from "../redux/features/book/bookSlice";
+import { resetFilter, setGenre, setSearchText, setYear } from "../redux/features/book/bookSlice";
 
 const headerStyles =
   "px-6 py-1 border border-purple-400 rounded ml-2 bg-purple-400 hover:bg-purple-600 hover:text-white transition-all";
@@ -25,6 +25,12 @@ const Header = () => {
   useEffect(() => {
     console.log("years", data?.data);
   }, [data]);
+  const navigate = useNavigate();
+  const searchText = useAppSelector((state:RootState)=> state.filter.searchText);
+
+  const handleSearch = ()=> {
+    navigate(`/search/${searchText}`)
+  }
 
   return (
     <div
@@ -39,12 +45,13 @@ const Header = () => {
           type="text"
           className="border focus:outline-none py-2 px-4 rounded"
           placeholder="Enter search item"
+          onChange={(e)=> dispatch(setSearchText(e.target.value))}
         />
-        <button className="border py-2 mb-2 px-4 rounded bg-purple-300 hover:bg-purple-400 transition-all">
+        <button onClick={()=>handleSearch()} className="border py-2 mb-2 px-4 rounded bg-purple-300 hover:bg-purple-400 transition-all">
           Search
         </button>
         <br />
-        {location.pathname === "/" && (
+        {(location.pathname === "/" || location.pathname === "/books" || location.pathname === `/search/${searchText}`) && (
           <select onChange={(e)=> dispatch(setGenre(e.target.value))} className="border rounded focus:outline-none py-2">
 
             <option hidden value="">
@@ -56,7 +63,7 @@ const Header = () => {
           </select>
         )}
 
-        {location.pathname === "/" && (
+        {(location.pathname === "/" || location.pathname === "/books" || location.pathname === `/search/${searchText}`) && (
           <select onChange={(e)=> dispatch(setYear(e.target.value))} className="border rounded focus:outline-none py-2">
             <option hidden value="">
               Select Year
@@ -66,7 +73,7 @@ const Header = () => {
             ))}
           </select>
         )}
-        {
+        {(location.pathname === "/" || location.pathname === "/books" || location.pathname === `/search/${searchText}`) &&
           <button className="bg-white px-3 py-2" onClick={()=>dispatch(resetFilter())}>Reset Filter</button>
         }
       </div>

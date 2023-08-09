@@ -4,11 +4,13 @@ import { createSlice } from "@reduxjs/toolkit";
 
 type stateType = {
   genre:string,
-  year:string
+  year:string,
+  searchText:string
 };
 const initialState: stateType = {
   genre:"",
-  year:""
+  year:"",
+  searchText: ""
 };
 
 const bookSlice = createSlice({
@@ -24,9 +26,12 @@ const bookSlice = createSlice({
     resetFilter: (state)=> {
         state.genre = "";
         state.year = ""
+    },
+    setSearchText: (state, action)=> {
+      state.searchText = action.payload;
     }
   },
 });
 
-export const { setGenre, setYear, resetFilter } = bookSlice.actions;
+export const { setGenre, setYear, resetFilter, setSearchText } = bookSlice.actions;
 export default bookSlice.reducer;
