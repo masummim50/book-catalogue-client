@@ -17,6 +17,7 @@ import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
 import { BsBook, BsBookFill } from "react-icons/bs";
 import { useGetListsQuery } from "../redux/features/user/userApi";
 import DetailsSkeleton from "../ui/loadingSkeletons/DetailsSkeleton";
+import DotLoading from "../ui/DotLoading";
 
 const BookDetails = () => {
   // if book deletion is success then invisible the whole thing, and show a deletion message and redirect
@@ -28,12 +29,12 @@ const BookDetails = () => {
 
   const { data: lists, isSuccess: listSuccess } = useGetListsQuery(undefined);
 
-  const [addBookToWishlist] = useAddBookToWishlistMutation();
-  const [addBookToReadingList] = useAddBookToReadingListMutation();
-  const [removeBookFromWishlist] = useRemoveBookFromWishlistMutation();
-  const [removeFromReadingList] = useRemoveBookFromReadingListMutation();
+  const [addBookToWishlist, {isLoading:addtowishlistLoading}] = useAddBookToWishlistMutation();
+  const [addBookToReadingList, {isLoading:addtoreadinglistLoading}] = useAddBookToReadingListMutation();
+  const [removeBookFromWishlist, {isLoading:removefromwishlistLoading}] = useRemoveBookFromWishlistMutation();
+  const [removeFromReadingList, {isLoading:removefromreadinglistLoading}] = useRemoveBookFromReadingListMutation();
 
-  const [deleteBook, { isSuccess: deleteSuccess }] =
+  const [deleteBook, { isSuccess: deleteSuccess, isLoading:isdeletingbook }] =
     useDeleteBookByIdMutation();
 
   const [showConfirmDeletePopup, setShowConfirmDeletePopup] = useState(false);
@@ -118,38 +119,48 @@ const BookDetails = () => {
               {new Date(data.data.date).toDateString()}
             </p>
           </div>
+          <div className="flex flex-start my-2">
+          {
+            (addtowishlistLoading || addtoreadinglistLoading || removefromwishlistLoading || removefromreadinglistLoading) && 
+            <DotLoading size={"10px"}/>
+          }
+          </div>
           {user.email && (
             <>
-              {lists?.data?.wishlist?.find((book) => book._id === id) ? (
+              {lists?.data?.wishlist?.find((book) => book._id._id === id) ? (
                 <button
+                  disabled={removefromwishlistLoading}
                   onClick={() => handleRemoveBookFromWishlist()}
-                  className="bg-red-400  px-3 py-2 rounded-md hover:bg-red-600 font-bold text-white"
+                  className="bg-red-400  px-3 py-2 rounded-md hover:bg-red-600 font-bold text-white disabled:bg-purple-100"
                 >
                   Remove From WishList{" "}
                   <AiFillHeart className="inline text-white" />
                 </button>
               ) : (
                 <button
+                disabled={addtowishlistLoading}
                   onClick={() => handleAddToWishlist()}
-                  className="bg-green-100 px-3 py-2 mr-2 rounded-md hover:bg-green-200 font-bold"
+                  className="bg-green-100 px-3 py-2 mr-2 rounded-md hover:bg-green-200 font-bold disabled:bg-purple-100"
                 >
                   Add To WishList{" "}
                   <AiOutlineHeart className="inline text-green-900" />
                 </button>
               )}
 
-              {lists?.data?.reading?.find((book) => book._id === id) ? (
+              {lists?.data?.reading?.find((book) => book._id._id === id) ? (
                 <button
+                disabled={removefromreadinglistLoading}
                   onClick={() => handleRemoveFromReadingList()}
-                  className="bg-red-400 px-3 py-2 rounded-md hover:bg-red-600 font-bold text-white"
+                  className="bg-red-400 px-3 py-2 rounded-md hover:bg-red-600 font-bold text-white disabled:bg-purple-100"
                 >
                   Remove From Reading List{" "}
                   <BsBookFill className="inline  text-white" />
                 </button>
               ) : (
                 <button
+                disabled={addtoreadinglistLoading}
                   onClick={() => handleAddToReadingList()}
-                  className="bg-green-100 px-3 mr-2 py-2 rounded-md hover:bg-green-200 font-bold"
+                  className="bg-green-100 px-3 mr-2 py-2 rounded-md hover:bg-green-200 font-bold disabled:bg-purple-100"
                 >
                   Add To Reading List{" "}
                   <BsBook className="inline text-green-900" />
@@ -166,10 +177,13 @@ const BookDetails = () => {
             <p className="font-bold mb-2">
               Are you sure you want to delete this book?
             </p>
-            <div>
+            {
+              isdeletingbook && <DotLoading size={"10px"}/>
+            }
+            <div className="mt-2">
               <button
                 onClick={() => handleConfirmDelete()}
-                className="bg-red-600 text-white font-bold px-4 py-2 rounded-lg mr-2 hover:bg-red-800"
+                className="bg-red-600 text-white font-bold px-4 py-2 rounded-lg mr-2 hover:bg-red-800 "
               >
                 Delete Book
               </button>

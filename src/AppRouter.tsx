@@ -11,6 +11,7 @@ import EditBookPage from './pages/EditBookPage';
 import AllBooksPage from './pages/AllBooksPage';
 import SearchPage from './pages/SearchPage';
 import CardSkeleton from './ui/loadingSkeletons/CardSkeleton';
+import WishlistPage from './pages/WishlistPage';
 
 
 const AppRouter = () => {
@@ -21,6 +22,9 @@ const AppRouter = () => {
                 <Route path='/skel' element={<CardSkeleton/>}/>
                 <Route path='/' element={<HomePage/>}/>
                 <Route path='/books' element={<AllBooksPage/>}/>
+                <Route path='/wishlist' element={<WishlistPage/>}/>
+                <Route path='/readinglist' element={<WishlistPage/>}/>
+
                 <Route path="/search/:searchtext" element={<SearchPage/>}/>
                 <Route element={<PrivateRoute/>}>
                     <Route path='/add-book' element={<AddBookPage/>}/>

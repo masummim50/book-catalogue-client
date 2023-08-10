@@ -120,11 +120,11 @@ const Header = () => {
         {user && (
           <div className={headerStyles + " " + "relative group bg-purple-500"}>
             <div className="absolute top-[110%] right-0 invisible group-hover:visible">
-              <Link className={headerStyles + " " + "block mt-2"} to="/books">
+              <Link className={headerStyles + " " + "block mt-2"} to="/readinglist">
                 My Reading List
               </Link>
 
-              <Link className={headerStyles + " " + "block mt-2"} to="/books">
+              <Link className={headerStyles + " " + "block mt-2"} to="/wishlist">
                 My Wishlist
               </Link>
               <div

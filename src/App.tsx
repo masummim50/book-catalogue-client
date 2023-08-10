@@ -22,7 +22,10 @@ function App() {
   return (
     <>
     {
-      isLoading &&  <DotLoading size='50px'/>
+      isLoading && <div className='flex justify-center items-center min-h-[100vh] flex-col'>
+        <DotLoading size='50px'/>
+        <h2 className='text-[30px] text-orange-700'> First time, server may take a while to start up</h2>
+      </div> 
     }
     {
       !token && <AppRouter/>
