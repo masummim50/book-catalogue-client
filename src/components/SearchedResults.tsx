@@ -1,10 +1,11 @@
-import React from "react";
+
 import { useGetSearchedBooksQuery } from "../redux/features/book/bookApi";
 import { useParams, Link } from "react-router-dom";
 import { useEffect } from "react";
 import { useAppSelector } from "../redux/hooks";
 import { RootState } from "../redux/store";
 import CardSkeleton from "../ui/loadingSkeletons/CardSkeleton";
+import { IBook } from "../interfaces/book.interface";
 
 const SearchedResults = () => {
   const { searchtext } = useParams();
@@ -20,12 +21,12 @@ const SearchedResults = () => {
       <h2 className="text-[25px] font-bold mb-5">Searched books</h2>
       <div className="grid grid-cols-4">
   {
-    isLoading && Array(10).fill(" ").map(a=> (
+    isLoading && Array(10).fill(" ").map(()=> (
       <CardSkeleton/>
     ))
   }
   {data?.data &&
-    ((filteredBooks = data.data.filter((book) => {
+    ((filteredBooks = data.data.filter((book:IBook) => {
       if (filter.genre && book.genre !== filter.genre) {
         return false;
       }
@@ -38,7 +39,7 @@ const SearchedResults = () => {
       return true;
     })),
     filteredBooks.length > 0 ? (
-      filteredBooks.map((book) => (
+      filteredBooks.map((book:IBook) => (
         <Link
           to={`/book/${book._id}`}
           key={book._id}

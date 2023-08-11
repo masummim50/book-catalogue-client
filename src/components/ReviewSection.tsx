@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useAppSelector } from "../redux/hooks";
 import { RootState } from "../redux/store";
 import {
@@ -19,15 +19,14 @@ const ReviewSection: React.FC<ReviewProps> = ({ reviews }) => {
   // redux functions and selectors
   const user = useAppSelector((state: RootState) => state.user.user);
   const [
-    postReview,
-    { isSuccess: reviewPostSuccess, data: newlyPostedReview },
+    postReview
   ] = useAddReviewMutation();
-  const [deleteReview, { isSuccess: deleteSuccess, data: afterDelete }] =
+  const [deleteReview] =
     useDeleteReviewMutation();
 
-  const [myReview, setMyReview] = useState(
-    reviews.find((review) => review.user._id === user._id)
-  );
+  // const [myReview, setMyReview] = useState(
+  //   reviews.find((review) => review.user._id === user._id)
+  // );
 
   const [reviewText, setReviewText] = useState("");
 
@@ -57,7 +56,7 @@ const ReviewSection: React.FC<ReviewProps> = ({ reviews }) => {
             disabled
             id="reviewArea"
             defaultValue={reviews.find((review) => review.user._id === user._id)?.review}
-            className="border border-2 rounded min-w-[300px] min-h-[100px] bg-purple-100"
+            className=" border-2 rounded min-w-[300px] min-h-[100px] bg-purple-100"
           />
           <br />
             <button

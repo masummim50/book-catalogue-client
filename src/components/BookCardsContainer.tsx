@@ -1,20 +1,19 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import React, { useEffect } from "react";
+
 import "./elipsis.css";
 import {
-  useGetBooksQuery,
   useGetRecentBooksQuery,
 } from "../redux/features/book/bookApi";
 import { Link } from "react-router-dom";
-import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
 import { useAppSelector } from "../redux/hooks";
 import { RootState } from "../redux/store";
 import CardSkeleton from "../ui/loadingSkeletons/CardSkeleton";
+import { IBook } from "../interfaces/book.interface";
 
 
 const BookCardsContainer = () => {
   let filteredBooks;
-  const { isLoading, isError, data, isSuccess } =
+  const { isLoading, data } =
     useGetRecentBooksQuery(undefined);
   const filter = useAppSelector((state: RootState) => state.filter);
 
@@ -60,12 +59,12 @@ const BookCardsContainer = () => {
 
 <div className="grid grid-cols-4">
   {
-    isLoading && Array(10).fill(" ").map(a=> (
+    isLoading && Array(10).fill(" ").map(()=> (
       <CardSkeleton/>
     ))
   }
   {data?.data &&
-    ((filteredBooks = data.data.filter((book) => {
+    ((filteredBooks = data.data.filter((book:IBook) => {
       if (filter.genre && book.genre !== filter.genre) {
         return false;
       }
@@ -78,7 +77,7 @@ const BookCardsContainer = () => {
       return true;
     })),
     filteredBooks.length > 0 ? (
-      filteredBooks.map((book) => (
+      filteredBooks.map((book:IBook) => (
         <Link
           to={`/book/${book._id}`}
           key={book._id}

@@ -1,7 +1,15 @@
-import React from "react";
+
 import { useGetListsQuery } from "../redux/features/user/userApi";
 import { Link } from "react-router-dom";
 import DotLoading from "../ui/DotLoading";
+
+export interface wishlistBook {
+  _id: {
+    _id:string,
+    title:string,
+    author:string
+  }
+}
 
 const Wishlist = () => {
   const { data: list, isLoading } = useGetListsQuery(undefined);
@@ -22,8 +30,8 @@ const Wishlist = () => {
             </p>
         }
         {
-            list?.data?.wishlist.map(book=> (
-                <Link to={`/book/${book._id._id}`} className="flex flex-col bg-gradient-to-r from-purple-300 via-white to-white p-3 rounded-lg hover:shadow hover:shadow-lg mb-4">
+            list?.data?.wishlist.map((book:wishlistBook)=> (
+                <Link to={`/book/${book._id._id}`} className="flex flex-col bg-gradient-to-r from-purple-300 via-white to-white p-3 rounded-lg  hover:shadow-lg mb-4">
                      <p className="font-bold text-[25px]">{book._id.title}</p>
                      <p>{book._id.author}</p>
                 </Link>

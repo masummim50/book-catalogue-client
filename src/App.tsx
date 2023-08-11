@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 
-import React , { useEffect, useState }from 'react' 
+import { useEffect, useState }from 'react' 
 import './App.css'
 import AppRouter from './AppRouter'
 import { useVerifyTokenMutation } from './redux/features/user/userApi'
@@ -8,7 +8,7 @@ import DotLoading from './ui/DotLoading';
 
 function App() {
 
-  const [verifyToken, {isLoading, isError, isSuccess, data}] = useVerifyTokenMutation();
+  const [verifyToken, {isLoading, isError, isSuccess}] = useVerifyTokenMutation();
   const [token, setToken] = useState("")
   
   useEffect(()=> {
@@ -17,7 +17,7 @@ function App() {
       setToken(token)
       verifyToken(undefined)
     }
-  }, [])
+  }, [verifyToken])
 
   return (
     <>
