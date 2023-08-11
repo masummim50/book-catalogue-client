@@ -17,7 +17,7 @@ const bookApi = api.injectEndpoints({
     getBookById: builder.query({
       query: (id) => `/book/${id}`,
       providesTags: ["SingleBook"],
-      async onQueryStarted(arg, { queryFulfilled }) {
+      async onQueryStarted(_, { queryFulfilled }) {
         const data = await queryFulfilled;
         console.log("get book by id data", data);
       },
