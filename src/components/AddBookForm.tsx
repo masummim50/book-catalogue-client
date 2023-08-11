@@ -1,5 +1,6 @@
+/* eslint-disable react-refresh/only-export-components */
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useAddBookMutation } from "../redux/features/book/bookApi";
 import DotLoading from "../ui/DotLoading";
@@ -43,7 +44,6 @@ export default function AddBookForm() {
     register,
     handleSubmit,
     reset,
-    formState: { errors },
   } = useForm<FormData>();
   const onSubmit = handleSubmit((data) => {
     addBook(data)
@@ -59,7 +59,7 @@ export default function AddBookForm() {
         setSuccess(false)
       }, 1000);
     }
-  }, [isSuccess])
+  }, [isSuccess, reset])
 
   return (
     <div className="mx-auto w-[600px] min-h-[60vh]">

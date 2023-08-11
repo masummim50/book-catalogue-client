@@ -1,6 +1,6 @@
 
 import { useForm } from "react-hook-form";
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import { useLoginMutation } from "../redux/features/user/userApi";
 import { setUser } from "../redux/features/user/userSlice";
 // import { useDispatch } from 'react-redux';
@@ -35,7 +35,7 @@ const Login = () => {
               navigate("/")
             }
         }
-    }, [data, isSuccess])
+    }, [data, isSuccess, dispatch, navigate, state])
 
     useEffect(()=> {
       if(isError){
@@ -54,10 +54,7 @@ const Login = () => {
 
   return (
     <div className="mx-auto w-[600px] min-h-[70vh]">
-      {
-        isError &&
-        <p className="text-red-600">{error.data.message}</p>
-      }
+      
       <form onSubmit={onSubmit} className="mt-4">
         <label className="block">email</label>
         <input

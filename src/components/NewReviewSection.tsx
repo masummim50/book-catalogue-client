@@ -1,13 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useAppSelector } from "../redux/hooks";
 import { RootState } from "../redux/store";
 import {
   useAddReviewMutation,
-  useDeleteReviewMutation,
-  useUpdateReviewMutation,
 } from "../redux/features/book/bookApi";
 import { useParams } from "react-router-dom";
-import { BiEditAlt } from "react-icons/bi";
 
 interface ReviewProps {
   reviews: [
@@ -18,9 +15,9 @@ interface ReviewProps {
 const NewReviewSection: React.FC<ReviewProps> = ({ reviews }) => {
     const {id:bookId} = useParams()
     const user = useAppSelector((state:RootState)=> state.user.user)
-    const [postReview, {isSuccess:reviewPostSuccess, data:newlyPostedReview}] = useAddReviewMutation();
+    const [postReview] = useAddReviewMutation();
 
-    const [myReview, setMyReview] = useState(reviews.find(review=> review.user._id === user._id));
+    const [myReview] = useState(reviews.find(review=> review.user._id === user._id));
 
     
   const [review, setReview] = useState("");

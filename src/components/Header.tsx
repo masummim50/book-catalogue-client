@@ -32,12 +32,12 @@ const Header = () => {
     navigate(`/search/${searchText}`)
   }
 
-  const handleSearchInputChange = (e)=> {
-    console.log(e.target.value)
+  const handleSearchInputChange = (e:React.KeyboardEvent<HTMLInputElement>)=> {
+    const inputValue = (e.target as HTMLInputElement).value
     if(e.key === "Enter"){
       handleSearch()
     }else{
-      dispatch(setSearchText(e.target.value))
+      dispatch(setSearchText(inputValue))
 
     }
   }

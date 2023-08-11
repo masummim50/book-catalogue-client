@@ -22,7 +22,7 @@ const userApi = api.injectEndpoints({
         url: "/auth/verifyAccessToken",
         method: "POST",
       }),
-      async onQueryStarted(arg, { dispatch, queryFulfilled }) {
+      async onQueryStarted(_, { dispatch, queryFulfilled }) {
         try {
           const data = await queryFulfilled;
           if (data.data.data) {

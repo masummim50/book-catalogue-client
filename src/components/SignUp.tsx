@@ -1,5 +1,5 @@
 import { useForm } from "react-hook-form";
-import React, {useEffect, useState} from "react";
+import {useEffect, useState} from "react";
 import { useSignupMutation } from "../redux/features/user/userApi";
 import { useNavigate } from "react-router-dom";
 import DotLoading from "../ui/DotLoading";
@@ -15,23 +15,13 @@ const SignUp = () => {
   const navigate = useNavigate();
   const [emailError, setEmailError] = useState(false);
   const [signUpSuccess, setSignUpSuccess] = useState(false);
-  const [signUp, { isError, isSuccess, isLoading, data:signupdata, error }] = useSignupMutation();
-  useEffect(()=> {
-    if(isError && error?.data?.message.split(" ")[0] === "E11000"){
-      setEmailError(true)
-      setTimeout(() => {
-        setEmailError(false);
-      }, 1000);
-    }
+  const [signUp, { isError, isSuccess, isLoading, error }] = useSignupMutation();
 
-    if(isSuccess){
-      setSignUpSuccess(true);
-      setTimeout(() => {
-        navigate("/login")
-      }, 500);
+  interface customError {
+    data: {
+      message: string
     }
-    reset()
-  },[isError, error, isSuccess])
+  }
   const {
     register,
     handleSubmit,
@@ -42,11 +32,27 @@ const SignUp = () => {
     console.log(data);
     signUp(data);
   });
-
   useEffect(()=> {
-    console.log(isError, isSuccess, isLoading, signupdata);
 
-  },[signupdata])
+    if(error){
+    const fetchError = error as customError;
+      if(isError && fetchError?.data.message.split(" ")[0] === "E11000"){
+          setEmailError(true)
+          setTimeout(() => {
+            setEmailError(false);
+          }, 1000);
+        }
+      }
+    if(isSuccess){
+      setSignUpSuccess(true);
+      setTimeout(() => {
+        navigate("/login")
+      }, 500);
+    }
+    reset()
+  },[isError, error, isSuccess, navigate, reset])
+
+
 
   return (
     <div className="mx-auto w-[600px] min-h-[60vh]">

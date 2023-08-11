@@ -18,6 +18,7 @@ import { BsBook, BsBookFill } from "react-icons/bs";
 import { useGetListsQuery } from "../redux/features/user/userApi";
 import DetailsSkeleton from "../ui/loadingSkeletons/DetailsSkeleton";
 import DotLoading from "../ui/DotLoading";
+import { wishlistBook } from "./Wishlist";
 
 const BookDetails = () => {
   // if book deletion is success then invisible the whole thing, and show a deletion message and redirect
@@ -27,7 +28,7 @@ const BookDetails = () => {
   const user = useAppSelector((state: RootState) => state.user.user);
   const { isSuccess, data, isLoading } = useGetBookByIdQuery(id);
 
-  const { data: lists, isSuccess: listSuccess } = useGetListsQuery(undefined);
+  const { data: lists } = useGetListsQuery(undefined);
 
   const [addBookToWishlist, {isLoading:addtowishlistLoading}] = useAddBookToWishlistMutation();
   const [addBookToReadingList, {isLoading:addtoreadinglistLoading}] = useAddBookToReadingListMutation();
@@ -57,7 +58,7 @@ const BookDetails = () => {
         navigate("/");
       }, 1000);
     }
-  }, [deleteSuccess]);
+  }, [deleteSuccess, navigate]);
   // console.log the book data
 
   const handleAddToWishlist = () => {
@@ -127,7 +128,7 @@ const BookDetails = () => {
           </div>
           {user.email && (
             <>
-              {lists?.data?.wishlist?.find((book) => book._id._id === id) ? (
+              {lists?.data?.wishlist?.find((book:wishlistBook) => book._id._id === id) ? (
                 <button
                   disabled={removefromwishlistLoading}
                   onClick={() => handleRemoveBookFromWishlist()}
@@ -147,7 +148,7 @@ const BookDetails = () => {
                 </button>
               )}
 
-              {lists?.data?.reading?.find((book) => book._id._id === id) ? (
+              {lists?.data?.reading?.find((book:wishlistBook) => book._id._id === id) ? (
                 <button
                 disabled={removefromreadinglistLoading}
                   onClick={() => handleRemoveFromReadingList()}

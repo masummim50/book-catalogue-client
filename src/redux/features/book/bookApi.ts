@@ -58,9 +58,10 @@ const bookApi = api.injectEndpoints({
         try {
           const data = await queryFulfilled;
           dispatch(
-            api.util.updateQueryData("getBookById", arg.id, (draft) => {
+            api.util.updateQueryData<"getBookById">("getBookById" as const, arg.id as string, (draft) => {
               
-              return draft = data.data;
+              draft = data.data;
+              return draft;
             })
           );
         } catch (error) {
@@ -80,7 +81,8 @@ const bookApi = api.injectEndpoints({
           dispatch(
             api.util.updateQueryData("getBookById", arg.id, (draft) => {
               
-              return draft = data.data;
+              draft = data.data;
+              return draft 
             })
           );
         } catch (error) {
@@ -99,8 +101,8 @@ const bookApi = api.injectEndpoints({
           const data = await queryFulfilled;
           dispatch(
             api.util.updateQueryData("getBookById", arg.id, (draft) => {
-              
-              return draft = data.data;
+              draft = data.data;
+              return draft;
             })
           );
         } catch (error) {
