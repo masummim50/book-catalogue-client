@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import {useEffect} from 'react';
 import Header from '../components/Header';
 import { useNavigate } from 'react-router-dom';
 import Footer from '../components/Footer';
@@ -9,7 +9,7 @@ const NotFound = () => {
         setTimeout(() => {
             navigate("/")
         }, 1500);
-    },[])
+    },[navigate])
     return (
         <>
             <Header/>

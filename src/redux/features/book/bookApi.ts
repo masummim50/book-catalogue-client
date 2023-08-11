@@ -58,7 +58,7 @@ const bookApi = api.injectEndpoints({
         try {
           const data = await queryFulfilled;
           dispatch(
-            api.util.updateQueryData<"getBookById">("getBookById" as const, arg.id as string, (draft) => {
+            bookApi.util.updateQueryData("getBookById", arg.id, (draft) => {
               
               draft = data.data;
               return draft;
@@ -79,7 +79,7 @@ const bookApi = api.injectEndpoints({
         try {
           const data = await queryFulfilled;
           dispatch(
-            api.util.updateQueryData("getBookById", arg.id, (draft) => {
+            bookApi.util.updateQueryData("getBookById", arg.id, (draft) => {
               
               draft = data.data;
               return draft 
@@ -100,7 +100,7 @@ const bookApi = api.injectEndpoints({
         try {
           const data = await queryFulfilled;
           dispatch(
-            api.util.updateQueryData("getBookById", arg.id, (draft) => {
+            bookApi.util.updateQueryData("getBookById", arg.id, (draft) => {
               draft = data.data;
               return draft;
             })

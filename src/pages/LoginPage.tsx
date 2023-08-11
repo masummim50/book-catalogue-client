@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import Header from '../components/Header';
 import Login from '../components/Login';
 import { useNavigate } from 'react-router-dom';
@@ -14,7 +14,7 @@ const LoginPage = () => {
         if(user){
             navigate("/")
         }
-    },[])
+    },[navigate, user])
     return (
         <>
             <Header/>

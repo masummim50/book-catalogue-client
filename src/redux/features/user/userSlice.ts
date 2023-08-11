@@ -22,7 +22,8 @@ const userSlice = createSlice({
   initialState,
   reducers: {
     setUser: (state, action) => {
-      return (state = action.payload);
+      state.accessToken = action.payload.accessToken;
+      state.user = action.payload.user;
     },
     removeUser: (state) => {
       state.accessToken = "";

@@ -1,7 +1,7 @@
-import React from 'react';
+
 import Header from '../components/Header';
-import BookCardsContainer from '../components/bookCardsContainer';
 import Footer from '../components/Footer';
+import BookCardsContainer from '../components/BookCardsContainer';
 
 const HomePage = () => {
     return (
