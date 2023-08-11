@@ -52,6 +52,7 @@ const ReviewSection: React.FC<ReviewProps> = ({ reviews }) => {
     <div className="mt-3">
       {reviews.find((review) => review.user._id === user._id) ? (
         <>
+          <p>My review: </p>
           <textarea
             disabled
             id="reviewArea"
@@ -63,7 +64,7 @@ const ReviewSection: React.FC<ReviewProps> = ({ reviews }) => {
               onClick={() => handleDeleteReview()}
               className="bg-purple-300 px-4 py-2 rounded-lg hover:bg-purple-400 mr-2"
             >
-              Delete Review
+              Delete My Review
             </button>
         </>
       ) : (

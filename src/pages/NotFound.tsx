@@ -1,6 +1,7 @@
 import React, {useEffect} from 'react';
 import Header from '../components/Header';
 import { useNavigate } from 'react-router-dom';
+import Footer from '../components/Footer';
 
 const NotFound = () => {
     const navigate = useNavigate()
@@ -16,6 +17,7 @@ const NotFound = () => {
                 This page does not exists
                 Redirecting in a second
             </div>
+            <Footer/>
             
         </>
     );

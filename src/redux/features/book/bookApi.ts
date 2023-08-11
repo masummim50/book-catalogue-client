@@ -38,7 +38,7 @@ const bookApi = api.injectEndpoints({
         method: "POST",
         body: data,
       }),
-      invalidatesTags: ["books", "recentBooks"]
+      invalidatesTags: ["books", "recentBooks", "years"]
     }),
     updateBook: builder.mutation({
       query: (arg) => ({
@@ -46,7 +46,7 @@ const bookApi = api.injectEndpoints({
         method: "PATCH",
         body: arg.data,
       }),
-      invalidatesTags: ["books", "SingleBook"]
+      invalidatesTags: ["books", "SingleBook", "recentBooks", "years"]
     }),
     addReview: builder.mutation({
       query: (arg) => ({

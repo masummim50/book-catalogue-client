@@ -2,6 +2,7 @@ import { useForm } from "react-hook-form";
 import React, {useEffect, useState} from "react";
 import { useSignupMutation } from "../redux/features/user/userApi";
 import { useNavigate } from "react-router-dom";
+import DotLoading from "../ui/DotLoading";
 
 type FormData = {
   name: string;
@@ -48,19 +49,21 @@ const SignUp = () => {
   },[signupdata])
 
   return (
-    <div className="mx-auto w-[600px] ">
+    <div className="mx-auto w-[600px] min-h-[60vh]">
       {
         emailError && <span className="text-red-700 font-bold">Email already exists</span>
       }
       <form onSubmit={onSubmit}>
         <label className="block">Name</label>
         <input
+          required
           className="border rounded focus:outline-none py-2 w-full"
           placeholder="Enter Your Name"
           {...register("name")}
         />
         <label className="block">email</label>
         <input
+        required
           className="border rounded focus:outline-none py-2 w-full"
           placeholder="Enter Your Email"
           {...register("email")}
@@ -68,6 +71,7 @@ const SignUp = () => {
 
         <label className="block">Password</label>
         <input
+        required
           className="border rounded focus:outline-none py-2 w-full"
           placeholder="Enter your password"
           {...register("password")}
@@ -75,9 +79,13 @@ const SignUp = () => {
 
         <div className="block text-right">
           {
-            signUpSuccess && <span className="text-green-700 font-bol">Sign up Successfull</span>
+            signUpSuccess && <span className="text-green-700 font-bold">Sign up Successfull</span>
           }
+          
           <br/>
+          <div className={`my-2 flex justify-end ${isLoading ? "": "invisible"}`}>
+            <DotLoading size={"12px"}/>
+          </div>
           <button
             type="submit"
             className="bg-purple-400 px-4 py-2 text-white shadow-md mt-2 hover:bg-purple-600 hover:color-white"

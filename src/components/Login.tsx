@@ -6,6 +6,7 @@ import { setUser } from "../redux/features/user/userSlice";
 // import { useDispatch } from 'react-redux';
 import { useAppDispatch } from "../redux/hooks";
 import { useLocation, useNavigate } from "react-router-dom";
+import DotLoading from "../ui/DotLoading";
 
 type FormData = {
   email: string;
@@ -20,7 +21,7 @@ const Login = () => {
     console.log("state", state)
 
 
-    const [login, { isSuccess, data, isError, error}] = useLoginMutation();
+    const [login, { isSuccess, data, isError, error, isLoading}] = useLoginMutation();
 
     useEffect(()=> {
         console.log(data)
@@ -52,12 +53,12 @@ const Login = () => {
   });
 
   return (
-    <div className="mx-auto w-[600px] ">
+    <div className="mx-auto w-[600px] min-h-[70vh]">
       {
         isError &&
         <p className="text-red-600">{error.data.message}</p>
       }
-      <form onSubmit={onSubmit}>
+      <form onSubmit={onSubmit} className="mt-4">
         <label className="block">email</label>
         <input
           className="border rounded focus:outline-none py-2 w-full"
@@ -73,7 +74,11 @@ const Login = () => {
         />
 
         <div className="block text-right">
-          <button type="submit" className="bg-purple-400 px-4 py-2 text-white shadow-md mt-2 hover:bg-purple-600 hover:color-white">Login</button>
+          <div className={`flex justify-end my-2 ${isLoading ? "": "invisible"}`}>
+
+          <DotLoading size={"13px"}/>
+          </div>
+          <button disabled={isLoading} type="submit" className="bg-purple-400 px-4 py-2 text-white shadow-md hover:bg-purple-600 hover:color-white disabled:bg-purple-100">Login</button>
         </div>
       </form>
     </div>

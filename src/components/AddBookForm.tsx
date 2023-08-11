@@ -62,7 +62,7 @@ export default function AddBookForm() {
   }, [isSuccess])
 
   return (
-    <div className="mx-auto w-[600px] ">
+    <div className="mx-auto w-[600px] min-h-[60vh]">
       <form onSubmit={onSubmit}>
         <label className="block">Book Title</label>
         <input
@@ -93,7 +93,7 @@ export default function AddBookForm() {
           placeholder="Type Book Genre"
           {...register("genre")}
         /> */}
-        <label className="block">Book Genre</label>
+        <label className="block">Published Date</label>
         <input
         required
         type="date"

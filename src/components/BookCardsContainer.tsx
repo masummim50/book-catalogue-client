@@ -19,7 +19,7 @@ const BookCardsContainer = () => {
   const filter = useAppSelector((state: RootState) => state.filter);
 
   return (
-    <div className="max-w-[1100px] m-auto mt-6  min-h-[100vh]">
+    <div className="max-w-[1100px] m-auto mt-6  min-h-[50vh]">
 
       <h2 className="text-[25px] font-bold mb-5">Recently Added Books</h2>
       {/* <div className="grid bg-purple-200 grid-cols-4"> */}
@@ -92,6 +92,9 @@ const BookCardsContainer = () => {
             Posted By:{" "}
           </span>
           <p className="inline font-thin">{book?.addedBy?.name}</p>
+                            <br/>
+                            <span className='inline font-bold text-gray-500 text-[12px]'>Published on: </span>
+                            <p className='inline font-thin'>{new Date(book?.date).toDateString()}</p>
         </Link>
       ))
     ) : (

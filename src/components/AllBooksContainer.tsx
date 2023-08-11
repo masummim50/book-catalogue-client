@@ -8,9 +8,9 @@ const AllBooksContainer = () => {
     
   const {isLoading, isError, data, isSuccess} = useGetBooksQuery(undefined);
     return (
-        <div className='max-w-[1100px] m-auto mt-6'>
+        <div className='max-w-[1100px] m-auto mt-6 min-h-[50vh]'>
             <h2 className='text-[25px] font-bold mb-5'>All Books</h2>
-            <div className="grid bg-purple-200 grid-cols-4">
+            <div className="grid  grid-cols-4">
                 {
                     isLoading && Array(10).fill("").map(skeleton=> (
                         <CardSkeleton/>

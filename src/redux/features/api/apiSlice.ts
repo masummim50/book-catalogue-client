@@ -9,7 +9,7 @@ const baseUrl= "https://book-catalogue-server.onrender.com/api/v1/"
 export const api = createApi({
   reducerPath: "api",
   baseQuery: fetchBaseQuery({
-    baseUrl: url,
+    baseUrl: baseUrl,
     prepareHeaders: (headers, { getState }) => {
       // const token = (getState() as RootState).user.accessToken;
       const token = localStorage.getItem("token");

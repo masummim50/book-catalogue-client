@@ -95,7 +95,7 @@ const BookDetails = () => {
       )}
       {isSuccess && (
         <div
-          className={`mt-5 max-w-[1100px] px-2 m-auto ${
+          className={`mt-5 max-w-[1100px] px-2 m-auto min-h-[60vh] ${
             hideDetails && "invisible"
           }`}
         >
@@ -217,7 +217,12 @@ const BookDetails = () => {
           {user.email && <ReviewSection reviews={data.data.reviews} />}
 
           {/* The review slider */}
+          <h2 className="font-bold mt-2">Reviews: </h2>
+          {
+            data?.data?.reviews.length <1 && <p>No reviews</p>
+          }
           <ReviewSlider reviews={data.data.reviews} />
+          <br/>
         </div>
       )}
     </>

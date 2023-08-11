@@ -4,6 +4,7 @@ import Login from '../components/Login';
 import { useNavigate } from 'react-router-dom';
 import { useAppSelector } from '../redux/hooks';
 import { RootState } from '../redux/store';
+import Footer from '../components/Footer';
 
 const LoginPage = () => {
     const navigate = useNavigate();
@@ -18,6 +19,7 @@ const LoginPage = () => {
         <>
             <Header/>
             <Login/>
+            <Footer/>
         </>
     );
 };

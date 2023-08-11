@@ -8,6 +8,7 @@ import {
 } from "../redux/features/book/bookApi";
 import { useParams } from "react-router-dom";
 import { bookGenres } from "./AddBookForm";
+import DotLoading from "../ui/DotLoading";
 
 type FormData = {
   title: string;
@@ -26,7 +27,7 @@ export default function EditBookForm() {
   const { id } = useParams();
   const { data, isSuccess } = useGetBookByIdQuery(id);
   const [bookRetrieved, setBookRetrieved] = useState(false);
-  const [updateBook, {isSuccess:bookUpdateSuccess}] = useUpdateBookMutation()
+  const [updateBook, {isSuccess:bookUpdateSuccess, isLoading:bookupdateLoading}] = useUpdateBookMutation()
 
   useEffect(() => {
     if (isSuccess) {
@@ -98,10 +99,13 @@ export default function EditBookForm() {
             >
               Book Updated SuccessFully
             </span>
+            <div className={`my-2 flex justify-end ${bookupdateLoading ? "": "invisible"}`}>
+              <DotLoading size={"10px"}/>
+            </div>
             {/* <span>Something went wrong</span> */}
             <div className="block text-right">
               <button
-                disabled={!isDirty}
+                disabled={!isDirty || bookupdateLoading}
                 type="submit"
                 className="bg-purple-400 px-4 py-2 text-white shadow-md mt-2 hover:bg-purple-600 hover:color-white rounded-lg disabled:hover:bg-purple-100 disabled:bg-purple-100"
               >

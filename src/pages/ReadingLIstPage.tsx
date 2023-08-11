@@ -1,16 +1,16 @@
 import React from 'react';
 import Header from '../components/Header';
-import SignUp from '../components/SignUp';
+import ReadingList from '../components/ReadingLIst';
 import Footer from '../components/Footer';
 
-const SignUpPage = () => {
+const ReadingLIstPage = () => {
     return (
         <>
             <Header/>
-            <SignUp/>
+            <ReadingList/>
             <Footer/>
         </>
     );
 };
 
-export default SignUpPage;
+export default ReadingLIstPage;

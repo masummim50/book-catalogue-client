@@ -4,6 +4,8 @@ import Skeleton,{SkeletonTheme} from 'react-loading-skeleton'
 import 'react-loading-skeleton/dist/skeleton.css'
 const DetailsSkeleton = () => {
     return (
+        <div className='min-h-[50vh]'>
+            
         <SkeletonTheme>
                 <Skeleton className='mb-2' height={40}></Skeleton>
                 <Skeleton className='mb-2' height={200}></Skeleton>
@@ -27,6 +29,7 @@ const DetailsSkeleton = () => {
                     </div>
                 </div>
             </SkeletonTheme>
+        </div>
     );
 };
 
