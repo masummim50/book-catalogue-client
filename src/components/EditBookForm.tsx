@@ -56,7 +56,7 @@ export default function EditBookForm() {
   return (
     <>
       {bookRetrieved ? (
-        <div className="mx-auto w-[600px] ">
+        <div className="mx-auto w-[600px] mb-2 mt-3">
           <form onSubmit={onSubmit}>
             <label className="block">Book Title</label>
             <input
@@ -82,7 +82,7 @@ export default function EditBookForm() {
             ))
           }
         </select>
-            <label className="block">Book Genre</label>
+            <label className="block">Published Date</label>
             <input
               defaultValue={data.data.date ? new Date(data.data.date).toISOString().substr(0, 10) : ''}
               type="date"

@@ -7,6 +7,7 @@ import { bookGenres } from "./AddBookForm";
 import { useGetYearsQuery } from "../redux/features/book/bookApi";
 import { useEffect } from "react";
 import { resetFilter, setGenre, setSearchText, setYear } from "../redux/features/book/bookSlice";
+import logo from "../assets/images/logo.jpg"
 
 const headerStyles =
   "px-6 py-1 border border-purple-400 rounded ml-2 bg-purple-400 hover:bg-purple-600 hover:text-white transition-all";
@@ -47,8 +48,8 @@ const Header = () => {
       id="header"
       className="flex justify-between w-100 items-center bg-purple-200 px-2 rounded-b"
     >
-      <Link to="/" className=" text-center">
-        Logo
+      <Link to="/" className=" text-center border hover:shadow-md rounded-[50%]">
+        <img className="w-[150px] h-[100px] rounded-[50%]" src={logo} alt="" />
       </Link>
       <div className="search flex-1 p-4 text-center">
         <input

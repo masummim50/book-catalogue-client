@@ -6,6 +6,7 @@ import {
   useDeleteReviewMutation,
 } from "../redux/features/book/bookApi";
 import { useParams } from "react-router-dom";
+import DotLoading from "../ui/DotLoading";
 
 interface ReviewProps {
   reviews: [
@@ -19,9 +20,10 @@ const ReviewSection: React.FC<ReviewProps> = ({ reviews }) => {
   // redux functions and selectors
   const user = useAppSelector((state: RootState) => state.user.user);
   const [
-    postReview
+    postReview,
+    {isLoading:postingReview}
   ] = useAddReviewMutation();
-  const [deleteReview] =
+  const [deleteReview, {isLoading:deletingReview}] =
     useDeleteReviewMutation();
 
   // const [myReview, setMyReview] = useState(
@@ -59,9 +61,14 @@ const ReviewSection: React.FC<ReviewProps> = ({ reviews }) => {
             className=" border-2 rounded min-w-[300px] min-h-[100px] bg-purple-100"
           />
           <br />
+          
+          <div className={`${deletingReview ? "" : "invisible"} flex flex-start`}>
+            <DotLoading size={"10px"}/>
+          </div>
             <button
+              disabled={deletingReview}
               onClick={() => handleDeleteReview()}
-              className="bg-purple-300 px-4 py-2 rounded-lg hover:bg-purple-400 mr-2"
+              className="bg-purple-300 px-4 py-2 rounded-lg hover:bg-purple-400 mr-2 disabled:bg-purple-100"
             >
               Delete My Review
             </button>
@@ -75,9 +82,13 @@ const ReviewSection: React.FC<ReviewProps> = ({ reviews }) => {
             className="border-purple-600 border p-4 min-w-[300px] focus:outline-none focus:borer-purple-800"
           />
           <br />
+          <div className={`${postingReview ? "" : "invisible"} flex flex-start`}>
+            <DotLoading size={"10px"}/>
+          </div>
           <button
+          disabled={postingReview}
             onClick={() => handleAddReview(reviewText)}
-            className="bg-purple-300 px-4 py-2 rounded-lg hover:bg-purple-400 mr-2"
+            className="bg-purple-300 px-4 py-2 rounded-lg hover:bg-purple-400 mr-2 disabled:bg-purple-100"
           >
             Add A Review+
           </button>
